@@ -1,14 +1,2 @@
-Mohammed Al-Oqleh Official Website
-
-هذه نسخة فعلية وليست صورة تصميم:
-- HTML/CSS/JS حقيقي
-- 6 تطبيقات فقط
-- صورة المستخدم الأصلية كما أُرسلت
-- شعار MO
-- نوافذ تفاصيل للتطبيقات
-- فيديو فيلم مالطا
-- زر اتصال وواتساب
-- تبديل عربي / English
-- متجاوب مع الموبايل
-
-شغّل index.html مباشرة في المتصفح.
+ارفع مجلد assets إلى جذر مستودع GitHub واختر Replace/Overwrite للملفات الستة الموجودة.
+الملفات: quran.png, cooking.jpg, kashfak-home.jpg, fincalc-home.jpg, bubble-home.jpg, global-home.jpg
