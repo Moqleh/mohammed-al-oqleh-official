@@ -18,10 +18,12 @@ jobs:
         run: node --check assets/js/visitor-counter-fallback.js
       - name: Verify required portfolio hooks
         run: |
+          grep -q 'id="home"' index.html
           grep -q 'id="about"' index.html
           grep -q 'id="apps"' index.html
           grep -q 'id="game"' index.html
+          grep -q 'id="malta"' index.html
+          grep -q 'id="contact"' index.html
           grep -q 'visitor-counter-fallback.js' index.html
-          grep -q "id='fields'" assets/js/visitor-counter-fallback.js
-          grep -q "id='journey'" assets/js/visitor-counter-fallback.js
-          grep -q "id='vision'" assets/js/visitor-counter-fallback.js
+          grep -q 'id="visitCount"' index.html
+          grep -q 'info.moqleh@yahoo.com' index.html
