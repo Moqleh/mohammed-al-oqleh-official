@@ -62,4 +62,4 @@ function saveCart(){localStorage.setItem('tabkhatCart',JSON.stringify([...cart])
 function addCart(v){cart.add(v);saveCart()}
 function showCart(){cartBody.innerHTML=cart.size?[...cart].map((v,i)=>'<div class="cartItem"><span>'+v+'</span><button data-r="'+i+'">✕</button></div>').join(''):'<p class="sub">السلة فارغة.</p>';cartBody.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{cart.delete([...cart][+b.dataset.r]);saveCart();showCart()});cartModal.classList.add('open');document.body.style.overflow='hidden'}
 cartNav.onclick=showCart;cartX.onclick=()=>{cartModal.classList.remove('open');document.body.style.overflow=''};cartModal.onclick=e=>{if(e.target===cartModal)cartX.click()};cartClear.onclick=()=>{cart.clear();saveCart();showCart()};saveCart();chip();render();
-if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));</script></body></html>
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{}));</script></body></html>
