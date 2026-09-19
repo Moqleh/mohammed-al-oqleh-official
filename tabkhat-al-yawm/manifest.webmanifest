@@ -1,0 +1,10 @@
+{
+  "name": "طبخة اليوم",
+  "short_name": "طبخة اليوم",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fff1f6",
+  "theme_color": "#e84b86",
+  "lang": "ar",
+  "dir": "rtl"
+}
