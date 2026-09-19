@@ -67,8 +67,9 @@ const body=document.body,langBtn=document.getElementById('langBtn'),menuBtn=docu
 let lang='ar';try{const savedLang=localStorage.getItem('moLang');if(savedLang==='ar'||savedLang==='en')lang=savedLang}catch(e){}
 function translatePage(){body.classList.toggle('en',lang==='en');document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;langBtn.textContent=lang==='ar'?'EN':'عربي';document.querySelectorAll('[data-ar][data-en]').forEach(el=>el.textContent=el.dataset[lang]);updateGameMessage();}
 langBtn.addEventListener('click',()=>{lang=lang==='ar'?'en':'ar';try{localStorage.setItem('moLang',lang)}catch(e){}translatePage()});
-menuBtn.addEventListener('click',()=>navLinks.classList.toggle('open'));
-document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
+function setMenu(open){navLinks.classList.toggle('open',open);menuBtn.setAttribute('aria-expanded',String(open));menuBtn.setAttribute('aria-label',open?(lang==='ar'?'إغلاق القائمة':'Close menu'):(lang==='ar'?'فتح القائمة':'Open menu'))}
+menuBtn.addEventListener('click',()=>setMenu(!navLinks.classList.contains('open')));
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
 function openVideo(e){if(e)e.preventDefault();videoModal.classList.add('open');maltaVideo.currentTime=0;const p=maltaVideo.play();if(p)p.catch(()=>{})}
 function closeVideo(){maltaVideo.pause();videoModal.classList.remove('open')}
 document.querySelectorAll('[data-modal="videoModal"]').forEach(el=>el.addEventListener('click',openVideo));document.querySelectorAll('.close').forEach(btn=>btn.addEventListener('click',closeVideo));videoModal.addEventListener('click',e=>{if(e.target===videoModal)closeVideo()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&videoModal.classList.contains('open'))closeVideo()});
