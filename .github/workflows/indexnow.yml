@@ -1,0 +1,35 @@
+name: Submit sites to IndexNow
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/indexnow.yml'
+      - 'sitemap.xml'
+      - 'sitemap-index.xml'
+      - 'index.html'
+
+permissions:
+  contents: read
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify IndexNow search engines
+        shell: bash
+        run: |
+          set -euo pipefail
+          KEY='7f8e2d9c4a6b1e3f5d7c9a2b4e6f8d1c'
+          submit() {
+            local URL="$1"
+            local KEY_LOCATION="$2"
+            curl --fail --silent --show-error --retry 3 -G 'https://api.indexnow.org/indexnow'               --data-urlencode "url=$URL"               --data-urlencode "key=$KEY"               --data-urlencode "keyLocation=$KEY_LOCATION" >/dev/null
+          }
+          submit 'https://moqleh.github.io/mohammed-al-oqleh-official/' 'https://moqleh.github.io/mohammed-al-oqleh-official/7f8e2d9c4a6b1e3f5d7c9a2b4e6f8d1c.txt'
+          submit 'https://moqleh.github.io/daily-tools/' 'https://moqleh.github.io/daily-tools/7f8e2d9c4a6b1e3f5d7c9a2b4e6f8d1c.txt'
+          submit 'https://moqleh.github.io/mo-fitness/' 'https://moqleh.github.io/mo-fitness/7f8e2d9c4a6b1e3f5d7c9a2b4e6f8d1c.txt'
+          submit 'https://moqleh.github.io/accounting-platform/login/' 'https://moqleh.github.io/accounting-platform/7f8e2d9c4a6b1e3f5d7c9a2b4e6f8d1c.txt'
+          submit 'https://moqleh.github.io/tabkhat-al-yawm/' 'https://moqleh.github.io/tabkhat-al-yawm/7f8e2d9c4a6b1e3f5d7c9a2b4e6f8d1c.txt'
+          submit 'https://moqleh.github.io/adawatak-financial/ar/' 'https://moqleh.github.io/adawatak-financial/7f8e2d9c4a6b1e3f5d7c9a2b4e6f8d1c.txt'
