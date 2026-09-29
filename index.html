@@ -52,6 +52,32 @@
 </style><style id="personal-brand-refresh">
 .hero-copy h1{font-size:clamp(42px,6vw,78px);line-height:1.05;letter-spacing:-.045em;max-width:900px}.hero-copy>p{font-size:clamp(16px,1.5vw,20px);line-height:1.9;max-width:760px}.stats{gap:12px}.stat{border-radius:16px;backdrop-filter:blur(12px)}.about-card{position:relative;overflow:hidden}.about-card:before{content:"MO";position:absolute;inset-inline-end:4%;top:-22px;font-size:130px;font-weight:1000;line-height:1;color:rgba(255,255,255,.025);pointer-events:none}.section-title{letter-spacing:-.035em}.app-card{border-radius:20px;overflow:hidden}.app-info{padding:18px}.app-info h3{font-size:1.15rem}.app-info p{line-height:1.75}.footer-strip{border-radius:18px}
 @media(max-width:700px){.hero-copy h1{font-size:44px}.hero-copy>p{font-size:16px}.stats{grid-template-columns:1fr}.app-info{padding:15px}}
+</style><style id="laptop-projects-layout">
+/* Laptop layout: fewer, wider cards and consistent MO CV sizing */
+@media (min-width: 769px) and (max-width: 1366px){
+  .container{width:min(1180px,calc(100% - 40px))}
+  .apps{padding:46px 0 54px}
+  .project-grid,.apps-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+  .app-card{min-width:0;border-radius:18px}
+  .app-img,.accounting-preview{height:220px}
+  .app-info{padding:17px 16px 18px}
+  .app-info h3{font-size:18px}
+  .app-info p{font-size:12.5px;line-height:1.7}
+  .site-cta{margin-top:12px}
+  #websitesGrid + .project-grid{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:18px}
+  #websitesGrid + .project-grid .app-card{grid-column:auto}
+  .accounting-preview iframe{transform:scale(.16)}
+  .nav-links{gap:16px}
+  .nav-links a{font-size:13px}
+  .brand-copy strong{font-size:21px}
+}
+@media (min-width: 1000px) and (max-width: 1366px){
+  #websitesGrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (min-width: 769px) and (max-width: 999px){
+  .project-grid,.apps-grid,#websitesGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #websitesGrid + .project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 </style></head>
 <body>
 <header class="header"><div class="container nav"><a class="brand" href="#home"><div class="logo-mo" style="overflow:hidden"><img src="https://raw.githubusercontent.com/Moqleh/mohammed-al-oqleh-official/main/MO%20LOGO.png?v=2" alt="MO" style="width:100%;height:100%;object-fit:contain;display:block"></div><div class="brand-copy"><strong data-ar="محمد العقلة" data-en="Mohammed Al-Oqleh">محمد العقلة</strong><span>Mohammed Al-Oqleh</span></div></a><nav class="nav-links" id="navLinks"><a class="active" href="#home" data-ar="الرئيسية" data-en="Home">الرئيسية</a><a href="#about" data-ar="عني" data-en="About">عني</a><a href="#apps" data-ar="التطبيقات" data-en="Apps">التطبيقات</a><a href="#game" data-ar="ألعاب" data-en="Games">ألعاب</a><a href="#malta" data-ar="مالطا" data-en="Malta">مالطا</a><a href="#contact" data-ar="تواصل" data-en="Contact">تواصل</a></nav><div class="nav-actions"><button class="lang-btn" id="langBtn" type="button" aria-label="Switch language">EN</button><a class="top-contact" href="https://wa.me/962799880062" target="_blank" rel="noopener noreferrer" data-ar="تواصل معي" data-en="Contact me">تواصل معي</a><button class="menu-btn" id="menuBtn" type="button" aria-label="فتح القائمة" aria-controls="navLinks" aria-expanded="false">☰</button></div></div></header>
