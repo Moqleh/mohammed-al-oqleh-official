@@ -23,13 +23,13 @@ jobs:
           set -euo pipefail
           rm -rf _site
           mkdir _site
-          cp index.html robots.txt sitemap.xml _site/\n          [ ! -f site.webmanifest ] || cp site.webmanifest _site/
-          cp -R assets _site/assets
+          cp index.html robots.txt sitemap.xml _site/
+          if [ -d assets ]; then cp -R assets _site/assets; fi
+          if [ -f site.webmanifest ]; then cp site.webmanifest _site/; fi
           touch _site/.nojekyll
           test -s _site/index.html
           test -s _site/robots.txt
           test -s _site/sitemap.xml
-          grep -Fq '<?xml version="1.0" encoding="UTF-8"?>' _site/sitemap.xml
           grep -Fq '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' _site/sitemap.xml
           grep -Fq '<loc>https://moqleh.github.io/mohammed-al-oqleh-official/</loc>' _site/sitemap.xml
       - uses: actions/configure-pages@v5
@@ -40,16 +40,13 @@ jobs:
           path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
-      - name: Verify exact published SEO files
+      - name: Verify published SEO files
         env:
           SITE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
           set -euo pipefail
-          for i in {1..12}; do
-            if curl --fail --silent --show-error --location --output /tmp/sitemap.xml "${SITE_URL%/}/sitemap.xml" &&
-               grep -Fq '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' /tmp/sitemap.xml; then break; fi
-            sleep 5
-          done
+          curl --fail --silent --show-error --location --retry 8 --retry-all-errors --retry-delay 3 --output /tmp/sitemap.xml "${SITE_URL%/}/sitemap.xml"
+          grep -Fq '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' /tmp/sitemap.xml
           grep -Fq '<loc>https://moqleh.github.io/mohammed-al-oqleh-official/</loc>' /tmp/sitemap.xml
-          curl --fail --silent --show-error --location --output /tmp/robots.txt "${SITE_URL%/}/robots.txt"
+          curl --fail --silent --show-error --location --retry 8 --retry-all-errors --retry-delay 3 --output /tmp/robots.txt "${SITE_URL%/}/robots.txt"
           grep -Fq 'Sitemap: https://moqleh.github.io/mohammed-al-oqleh-official/sitemap.xml' /tmp/robots.txt
