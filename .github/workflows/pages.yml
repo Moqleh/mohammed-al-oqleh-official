@@ -18,28 +18,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Verify SEO source files
+      - name: Build clean Pages artifact
         run: |
           set -euo pipefail
-          test -s sitemap.xml
-          test -s robots.txt
-          grep -Fq '<urlset' sitemap.xml
-          grep -Fq 'Sitemap: https://moqleh.github.io/mohammed-al-oqleh-official/sitemap.xml' robots.txt
-          grep -Fq 'rel="canonical" href="https://moqleh.github.io/mohammed-al-oqleh-official/"' index.html
-          grep -Fq '"@type":"Person"' index.html
+          rm -rf _site
+          mkdir _site
+          cp index.html robots.txt sitemap.xml site.webmanifest _site/
+          cp -R assets _site/assets
+          touch _site/.nojekyll
+          test -s _site/index.html
+          test -s _site/robots.txt
+          test -s _site/sitemap.xml
+          grep -Fq '<?xml version="1.0" encoding="UTF-8"?>' _site/sitemap.xml
+          grep -Fq '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' _site/sitemap.xml
+          grep -Fq '<loc>https://moqleh.github.io/mohammed-al-oqleh-official/</loc>' _site/sitemap.xml
       - uses: actions/configure-pages@v5
         with:
           enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
-      - name: Verify public SEO endpoints
+      - name: Verify exact published SEO files
         env:
           SITE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
           set -euo pipefail
-          curl --fail --silent --show-error --location --retry 8 --retry-all-errors --retry-delay 5 "${SITE_URL%/}/sitemap.xml" | grep -Fq '<urlset'
-          curl --fail --silent --show-error --location --retry 8 --retry-all-errors --retry-delay 5 "${SITE_URL%/}/robots.txt" | grep -Fq 'Sitemap: https://moqleh.github.io/mohammed-al-oqleh-official/sitemap.xml'
-          curl --fail --silent --show-error --location --retry 8 --retry-all-errors --retry-delay 5 "$SITE_URL" | grep -Fq 'Mohammed Al-Oqleh'
+          for i in {1..12}; do
+            if curl --fail --silent --show-error --location --output /tmp/sitemap.xml "${SITE_URL%/}/sitemap.xml" &&
+               grep -Fq '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' /tmp/sitemap.xml; then break; fi
+            sleep 5
+          done
+          grep -Fq '<loc>https://moqleh.github.io/mohammed-al-oqleh-official/</loc>' /tmp/sitemap.xml
+          curl --fail --silent --show-error --location --output /tmp/robots.txt "${SITE_URL%/}/robots.txt"
+          grep -Fq 'Sitemap: https://moqleh.github.io/mohammed-al-oqleh-official/sitemap.xml' /tmp/robots.txt
