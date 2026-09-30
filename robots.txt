@@ -2,6 +2,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://moqleh.github.io/mohammed-al-oqleh-official/sitemap.xml
-Sitemap: https://moqleh.github.io/mohammed-al-oqleh-official/sitemap.txt
-
-Sitemap: https://moqleh.github.io/mohammed-al-oqleh-official/sitemap-index.xml
