@@ -24,6 +24,8 @@ jobs:
           rm -rf _site
           mkdir _site
           cp index.html robots.txt sitemap.xml _site/
+          if [ -f sitemap-index.xml ]; then cp sitemap-index.xml _site/; fi
+          if [ -f 'MO LOGO.png' ]; then cp 'MO LOGO.png' _site/; fi
           if [ -d assets ]; then cp -R assets _site/assets; fi
           if [ -f site.webmanifest ]; then cp site.webmanifest _site/; fi
           touch _site/.nojekyll
