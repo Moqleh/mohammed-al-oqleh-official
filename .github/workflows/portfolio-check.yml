@@ -25,5 +25,5 @@ jobs:
           grep -q 'id="malta"' index.html
           grep -q 'id="contact"' index.html
           grep -q 'visitor-counter-fallback.js' index.html
-          grep -q 'id="visitCount"' index.html
-          grep -q 'info.moqleh@yahoo.com' index.html
+          grep -q 'id="videoModal"' index.html
+          grep -q 'id="gameArena"' index.html
